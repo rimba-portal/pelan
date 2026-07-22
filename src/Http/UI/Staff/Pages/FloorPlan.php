@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rimba\FloorPlan\Http\UI\Staff\Pages;
 
 use BackedEnum;
-use Rimba\FloorPlan\Models\Location;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -20,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Rimba\FloorPlan\Models\Location;
 use UnitEnum;
 
 class FloorPlan extends Page implements HasActions, HasForms, HasTable
