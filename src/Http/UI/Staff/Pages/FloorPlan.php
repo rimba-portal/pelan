@@ -30,7 +30,7 @@ class FloorPlan extends Page implements HasActions, HasForms, HasTable
 
     protected static string|UnitEnum|null $navigationGroup = 'Location';
 
-    protected static string|BackedEnum|null $navigationIcon = 'rimba-s-location';
+    protected static string|BackedEnum|null $navigationIcon = 'bites-s-location';
 
     protected static ?string $navigationLabel = 'Floor Plan';
 
@@ -96,7 +96,7 @@ class FloorPlan extends Page implements HasActions, HasForms, HasTable
 
                 //     Action::make('resetZoom')
                 //         ->iconButton()
-                //         ->icon('rimba-refresh2')
+                //         ->icon('bites-refresh2')
                 //         ->tooltip('Reset zoom')
                 //         ->extraAttributes([
                 //             '@click' => 'height = 800',
