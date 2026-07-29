@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rimba\FloorPlan\Models;
+namespace Rimba\Floorplan\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

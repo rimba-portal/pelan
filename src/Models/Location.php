@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rimba\FloorPlan\Models;
+namespace Rimba\Floorplan\Models;
 
 use App\Trees\Organization\Models\OrgCorp;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
