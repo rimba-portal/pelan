@@ -22,7 +22,7 @@ use Filament\Tables\Table;
 use Rimba\Floorplan\Models\Location;
 use UnitEnum;
 
-class Floorplan extends Page implements HasActions, HasForms, HasTable
+class Map extends Page implements HasActions, HasForms, HasTable
 {
     use InteractsWithActions;
     use InteractsWithForms;
