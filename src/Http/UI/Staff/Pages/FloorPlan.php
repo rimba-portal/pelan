@@ -38,7 +38,7 @@ class Floorplan extends Page implements HasActions, HasForms, HasTable
 
     protected static ?string $title = 'Floor Plan';
 
-    protected ?string $subheading = 'Links to floor plans and maps of the organization buildings and campuses. Ideally includes registered storage locations.';
+    protected ?string $subheading = 'Links to floor plans and maps of the organization buildings and campuses. Ideally includes registered storage rack locations.';
 
     protected string $view = 'staff.pages.location';
 
