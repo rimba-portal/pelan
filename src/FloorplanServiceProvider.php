@@ -20,12 +20,12 @@ class FloorplanServiceProvider extends BitesServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         FilamentView::registerRenderHook(
             PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
-            fn (): string => Action::make('Floorplan')
+            fn (): string => Action::make('FloorPlan')
                 ->label('Floor Plan')
                 ->iconButton()
                 ->badge()
                 ->icon('bites-location')
-                ->url(route('filament.staff.pages.map'))
+                ->url(route('filament.staff.pages.floor-plan'))
                 ->toHtml(),
         );
 
