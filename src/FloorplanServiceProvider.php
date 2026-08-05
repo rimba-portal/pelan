@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Rimba\Floorplan;
 
+use Rimba\Base\Services\BitesServiceProvider;
 use Filament\Actions\Action;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
-use Rimba\Base\Services\BitesServiceProvider;
+
 
 class FloorplanServiceProvider extends BitesServiceProvider
 {
-    protected string $viewsPath = __DIR__.'/../resources/views';
-
-    protected string $iconsPath = __DIR__.'/../resources/svg';
+    protected string $viewsPath = __DIR__ . '/../resources/views';
+    protected string $iconsPath = __DIR__ . '/../resources/svg';
 
     protected function bootPackage(): void
     {
@@ -25,14 +25,14 @@ class FloorplanServiceProvider extends BitesServiceProvider
                 ->iconButton()
                 ->badge()
                 ->icon('bites-location')
-                ->url(route('filament.staff.pages.map'))
+                ->url(route('filament.staff.pages.floor-plan'))
                 ->toHtml(),
         );
 
     }
-
     protected function registerPackage(): void
     {
         //
     }
+
 }
