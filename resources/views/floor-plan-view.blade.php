@@ -1,10 +1,10 @@
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
     <div
-        class="w-full border border-gray-300 rounded-lg overflow-hidden flex flex-col bg-white select-none"
+        class="flex w-full flex-col overflow-hidden rounded-lg border border-gray-300 bg-white select-none"
         @contextmenu.prevent
     >
         {{-- Viewer (same structure as pdf-view) --}}
-        <div class="flex-1 overflow-auto bg-gray-100 flex items-start justify-center">
+        <div class="flex flex-1 items-start justify-center overflow-auto bg-gray-100">
             <iframe
                 srcdoc='
                     <!DOCTYPE html>
@@ -31,7 +31,7 @@
                     </html>
                 '
                 class="bg-white shadow"
-                style="width: 100%; height: 500px;"
+                style="width: 100%; height: 500px"
             ></iframe>
         </div>
     </div>
