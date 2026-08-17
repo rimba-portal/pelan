@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Rimba\Floorplan\Models;
 
-use App\Trees\Organization\Models\OrgCorp;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Rimba\Organization\Models\OrgCorp;
 
 #[Fillable([
     'parent_id',
