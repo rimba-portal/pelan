@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rimba\Floorplan;
 
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Rimba\Base\Services\BitesServiceProvider;
@@ -20,15 +21,21 @@ class FloorplanServiceProvider extends BitesServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         FilamentView::registerRenderHook(
             PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
-            fn (): string => Action::make('FloorPlan')
-                ->label('Floor Plan')
-                ->iconButton()
-                ->badge()
-                ->icon('bites-location')
-                ->url(route('filament.staff.pages.map'))
-                ->toHtml(),
-        );
+            function (): string {
+                // Check if the current panel is 'lobby'. If it is, return an empty string to render nothing.
+                if (Filament::getCurrentPanel()?->getId() === 'lobby') {
+                    return '';
+                }
 
+                return Action::make('FloorPlan')
+                    ->label('Floor Plan')
+                    ->iconButton()
+                    ->badge()
+                    ->icon('bites-location')
+                    ->url(route('filament.staff.pages.map'))
+                    ->toHtml();
+            },
+        );
     }
 
     protected function registerPackage(): void
