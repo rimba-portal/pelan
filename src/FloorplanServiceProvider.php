@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rimba\Floorplan;
 
 use Filament\Actions\Action;
-use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Rimba\Base\Services\BitesServiceProvider;
@@ -27,15 +26,16 @@ class FloorplanServiceProvider extends BitesServiceProvider
                     return '';
                 }
 
-                return Action::make('FloorPlan')
-                    ->label('Floor Plan')
+                return Action::make('Calendar')
+                    ->label('Calendar')
                     ->iconButton()
                     ->badge()
-                    ->icon('bites-location')
-                    ->url(route('filament.staff.pages.map'))
+                    ->icon('bites-calendar')
+                    ->url(route('filament.staff.pages.calendar'))
                     ->toHtml();
             },
         );
+
     }
 
     protected function registerPackage(): void
