@@ -18,6 +18,11 @@ class SvgViewer extends Page
 
     public string $floorplanSvg = '';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public function mount(): void
     {
         $svgPath = public_path('storage/floorplan/floorplan.svg');

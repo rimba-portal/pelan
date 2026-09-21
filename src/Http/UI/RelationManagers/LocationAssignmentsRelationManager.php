@@ -28,17 +28,65 @@ final class LocationAssignmentsRelationManager extends RelationManager
 
     public function form(Schema $schema): Schema
     {
-        return $schema->components([Section::make('Assignment')->schema([
-            Select::make('location_id')->label('Location')->options(fn (): array => Location::query()->orderBy('name')->get()->mapWithKeys(fn (Location $location): array => [$location->getKey() => trim(($location->code ? $location->code.' - ' : '').$location->name)])->all())->required()->searchable()->preload(),
-            Select::make('type')->options(['primary' => 'Primary', 'secondary' => 'Secondary', 'temporary' => 'Temporary'])->required()->default('primary'),
-            DatePicker::make('start_date'), DatePicker::make('end_date')->afterOrEqual('start_date'), KeyValue::make('attributes')->columnSpanFull(),
-        ])->columns(2)]);
+        return $schema
+            ->components([Section::make('Assignment')
+                ->schema([
+                    Select::make('location_id')
+
+                        ->label('Location')
+                        ->options(fn (): array => Location::query()
+                            ->orderBy('name')
+                            ->get()
+                            ->mapWithKeys(fn (Location $location): array => [$location
+                                ->getKey() => trim(($location
+                                ->code ? $location
+                                ->code.' - ' : '').$location
+                                ->name)])
+                            ->all())
+                        ->required()
+                        ->searchable()
+                        ->preload(),
+                    Select::make('type')
+                        ->options(['primary' => 'Primary', 'secondary' => 'Secondary', 'temporary' => 'Temporary'])
+                        ->required()
+                        ->default('primary'),
+                    DatePicker::make('start_date'),
+                    DatePicker::make('end_date')
+                        ->afterOrEqual('start_date'),
+                    KeyValue::make('attributes')
+                        ->columnSpanFull(),
+                ])
+                ->columns(2)]);
     }
 
     public function table(Table $table): Table
     {
-        return $table->defaultSort('start_date', 'desc')->columns([
-            TextColumn::make('location.code')->label('Code')->searchable(), TextColumn::make('location.name')->label('Location')->searchable()->sortable(), TextColumn::make('location.type')->label('Location Type')->badge(), TextColumn::make('type')->badge(), TextColumn::make('start_date')->date()->sortable(), TextColumn::make('end_date')->date()->placeholder('Open')->sortable(),
-        ])->filters([SelectFilter::make('type')->options(['primary' => 'Primary', 'secondary' => 'Secondary', 'temporary' => 'Temporary'])])->headerActions([CreateAction::make()])->recordActions([EditAction::make(), DeleteAction::make()]);
+        return $table
+            ->defaultSort('start_date', 'desc')
+            ->columns([
+                TextColumn::make('location.code')
+                    ->label('Code')
+                    ->searchable(),
+                TextColumn::make('location.name')
+                    ->label('Location')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('location.type')
+                    ->label('Location Type')
+                    ->badge(),
+                TextColumn::make('type')
+                    ->badge(),
+                TextColumn::make('start_date')
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('end_date')
+                    ->date()
+                    ->placeholder('Open')
+                    ->sortable(),
+            ])
+            ->filters([SelectFilter::make('type')
+                ->options(['primary' => 'Primary', 'secondary' => 'Secondary', 'temporary' => 'Temporary'])])
+            ->headerActions([CreateAction::make()])
+            ->recordActions([EditAction::make(), DeleteAction::make()]);
     }
 }

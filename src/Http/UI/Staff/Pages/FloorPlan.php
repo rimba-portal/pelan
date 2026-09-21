@@ -31,7 +31,7 @@ final class FloorPlan extends Page implements HasTable
 
     protected static ?int $navigationSort = 40;
 
-    protected string $view = 'floorplan::filament.staff.pages.floor-plan';
+    protected string $view = 'bites::floor-plan';
 
     public ?int $selectedLocationId = null;
 
@@ -60,8 +60,29 @@ final class FloorPlan extends Page implements HasTable
 
     public function table(Table $table): Table
     {
-        return $table->query(Location::query()->with('parent'))->columns([
-            TextColumn::make('code')->searchable()->sortable(), TextColumn::make('name')->searchable()->sortable(), TextColumn::make('type')->badge()->sortable(), TextColumn::make('parent.name')->label('Parent')->placeholder('Root'), IconColumn::make('attributes.floorplan_svg')->label('Floor Plan')->boolean(fn ($state): bool => filled($state)),
-        ])->recordActions([Action::make('viewFloorplan')->label('View')->icon('heroicon-o-eye')->disabled(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))->action(fn (Location $record) => $this->selectLocation($record->getKey()))])->recordAction('viewFloorplan')->defaultPaginationPageOption(25)->emptyStateHeading('No locations found');
+        return $table->query(Location::query()->with('parent'))
+            ->columns([
+                TextColumn::make('code')
+                    ->searchable()->sortable(),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('parent.name')
+                    ->label('Parent')
+                    ->placeholder('Root'),
+                IconColumn::make('attributes.floorplan_svg')
+                    ->label('Floor Plan')
+                    ->boolean(fn ($state): bool => filled($state)),
+            ])->recordActions([Action::make('viewFloorplan')
+            ->label('View')
+            ->icon('heroicon-o-eye')
+            ->disabled(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))
+            ->action(fn (Location $record) => $this->selectLocation($record->getKey()))])
+            ->recordAction('viewFloorplan')
+            ->defaultPaginationPageOption(25)
+            ->emptyStateHeading('No locations found');
     }
 }

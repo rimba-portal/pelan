@@ -28,6 +28,16 @@ final class ChildLocationsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return $table->columns([TextColumn::make('code')->searchable(), TextColumn::make('name')->searchable(), TextColumn::make('type')->badge()])->headerActions([CreateAction::make()])->recordActions([EditAction::make(), DeleteAction::make()]);
+        return $table
+            ->columns([
+                TextColumn::make('code')
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('type')
+                    ->badge(),
+            ])
+            ->headerActions([CreateAction::make()])
+            ->recordActions([EditAction::make(), DeleteAction::make()]);
     }
 }

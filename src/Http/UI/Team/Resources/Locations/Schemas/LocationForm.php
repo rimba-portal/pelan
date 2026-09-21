@@ -20,16 +20,44 @@ final class LocationForm
     {
         return $schema->components([
             Section::make('Location')->schema([
-                TextInput::make('name')->required()->maxLength(255),
-                TextInput::make('code')->maxLength(100),
-                TextInput::make('type')->required()->maxLength(100)->datalist(['enterprise', 'site', 'building', 'floor', 'area', 'room', 'store', 'workspace']),
-                Select::make('parent_id')->label('Parent location')->relationship('parent', 'name')->searchable()->preload()->getOptionLabelFromRecordUsing(fn (Location $record): string => trim(($record->code ? $record->code.' - ' : '').$record->name))->modifyQueryUsing(fn (Builder $query, ?Location $record): Builder => $query->when($record, fn (Builder $q) => $q->whereKeyNot($record->getKey()))),
-                Textarea::make('description')->columnSpanFull()->rows(3),
-            ])->columns(2),
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('code')
+                    ->maxLength(100),
+                TextInput::make('type')
+                    ->required()
+                    ->maxLength(100)
+                    ->datalist(['enterprise', 'site', 'building', 'floor', 'area', 'room', 'store', 'workspace']),
+                Select::make('parent_id')
+                    ->label('Parent location')
+                    ->relationship(
+                        'parent',
+                        'name',
+                        fn (Builder $query, ?Location $record): Builder => $query->when($record, fn (Builder $q) => $q->whereKeyNot($record->getKey()))
+                    )
+                    ->searchable()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (Location $record): string => trim(($record->code ? $record->code.' - ' : '').$record->name)),
+                Textarea::make('description')
+                    ->columnSpanFull()
+                    ->rows(3),
+            ])
+                ->columns(2),
             Section::make('Floor plan')->description('Upload an SVG for this location. Staff will select the location from the directory and view this file.')->schema([
-                FileUpload::make('attributes.floorplan_svg')->label('SVG floor plan')->disk(config('filesystems.default'))->directory('floorplans')->acceptedFileTypes(['image/svg+xml'])->maxSize(5120)->downloadable()->openable()->preserveFilenames(),
+                FileUpload::make('attributes.floorplan_svg')
+                    ->label('SVG floor plan')
+                    ->disk(config('filesystems.default'))
+                    ->directory('floorplans')
+                    ->acceptedFileTypes(['image/svg+xml', 'image/png'])
+                    ->maxSize(5120)
+                    ->downloadable()
+                    ->openable()
+                    ->preserveFilenames(),
             ]),
-            Section::make('Additional attributes')->schema([KeyValue::make('attributes.metadata')->label('Metadata')])->collapsed(),
+            Section::make('Additional attributes')
+                ->schema([KeyValue::make('attributes.metadata')
+                    ->label('Metadata')])->collapsed(),
         ]);
     }
 }

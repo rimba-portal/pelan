@@ -14,7 +14,20 @@ final class LocationInfolist
     {
         return $schema->components([
             Section::make('Location')->schema([
-                TextEntry::make('name'), TextEntry::make('code')->placeholder('None'), TextEntry::make('type')->badge(), TextEntry::make('parent.name')->label('Parent')->placeholder('Root location'), TextEntry::make('description')->columnSpanFull()->placeholder('No description'), TextEntry::make('attributes.floorplan_svg')->label('Floor plan')->placeholder('No SVG uploaded'),
+                TextEntry::make('name'),
+                TextEntry::make('code')
+                    ->placeholder('None'),
+                TextEntry::make('type')
+                    ->badge(),
+                TextEntry::make('parent.name')
+                    ->label('Parent')
+                    ->placeholder('Root location'),
+                TextEntry::make('description')
+                    ->columnSpanFull()
+                    ->placeholder('No description'),
+                TextEntry::make('attributes.floorplan_svg')
+                    ->label('Floor plan')
+                    ->placeholder('No SVG uploaded'),
             ])->columns(2),
         ]);
     }

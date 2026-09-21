@@ -20,6 +20,11 @@ class Mindmap extends Page
 
     public string $mermaid;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public function mount(): void
     {
         // 1. Raw JSON Dataset Input

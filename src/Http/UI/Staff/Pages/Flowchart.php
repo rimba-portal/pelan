@@ -21,6 +21,11 @@ class Flowchart extends Page
 
     public string $mermaid;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public function mount(): void
     {
         // 1. Resolve path and load raw JSON from your seeds directory
