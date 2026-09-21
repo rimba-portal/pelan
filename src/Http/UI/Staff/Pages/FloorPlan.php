@@ -25,9 +25,9 @@ final class FloorPlan extends Page implements HasTable
 
     protected static string|UnitEnum|null $navigationGroup = 'Resources';
 
-    protected static ?string $navigationLabel = 'Locations';
+    protected static ?string $navigationLabel = 'Floor Plan';
 
-    protected static ?string $title = 'Locations';
+    protected static ?string $title = 'Floor Plan';
 
     protected static ?int $navigationSort = 40;
 
@@ -70,8 +70,9 @@ final class FloorPlan extends Page implements HasTable
                 TextColumn::make('type')
                     ->badge()
                     ->sortable(),
-                TextColumn::make('parent.name')
+                TextColumn::make('parent_path')
                     ->label('Parent')
+                    ->state(fn (Location $record): ?string => $record->parent_path)
                     ->placeholder('Root'),
                 IconColumn::make('attributes.floorplan_svg')
                     ->label('Floor Plan')
@@ -79,8 +80,13 @@ final class FloorPlan extends Page implements HasTable
             ])->recordActions([Action::make('viewFloorplan')
             ->label('View')
             ->icon('heroicon-o-eye')
-            ->disabled(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))
-            ->action(fn (Location $record) => $this->selectLocation($record->getKey()))])
+            ->hidden(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))
+            ->action(
+                function (Location $record): void {
+                    $this->selectLocation($record->getKey());
+                    $this->dispatch('collapse-locations-table');
+                }
+            )])
             ->recordAction('viewFloorplan')
             ->defaultPaginationPageOption(25)
             ->emptyStateHeading('No locations found');
