@@ -39,9 +39,9 @@ class Location extends Model
         ];
     }
 
-    public function childrens(): HasMany
+    public function children(): HasMany
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(Location::class, 'parent_id');
     }
 
     public function locationAssignments(): HasMany
