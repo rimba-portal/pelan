@@ -32,7 +32,7 @@ class FloorplanServiceProvider extends BitesServiceProvider
                     ->iconButton()
                     ->badge()
                     ->icon('bites-location')
-                    ->url(route('filament.staff.pages.map'))
+                    ->url(route('filament.staff.pages.floor-plan'))
                     ->toHtml();
             },
         );

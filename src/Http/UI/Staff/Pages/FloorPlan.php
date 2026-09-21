@@ -25,9 +25,9 @@ final class FloorPlan extends Page implements HasTable
 
     protected static string|UnitEnum|null $navigationGroup = 'Resources';
 
-    protected static ?string $navigationLabel = 'Floor Plan';
+    protected static ?string $navigationLabel = 'Locations';
 
-    protected static ?string $title = 'Floor Plan';
+    protected static ?string $title = 'Locations';
 
     protected static ?int $navigationSort = 40;
 
