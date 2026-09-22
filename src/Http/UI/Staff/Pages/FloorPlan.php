@@ -79,7 +79,7 @@ final class FloorPlan extends Page implements HasTable
                     ->boolean(fn ($state): bool => filled($state)),
             ])->recordActions([Action::make('viewFloorplan')
             ->label('View')
-            ->icon('heroicon-o-eye')
+            ->icon('heroicon-o-map')
             ->hidden(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))
             ->action(
                 function (Location $record): void {
