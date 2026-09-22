@@ -51,6 +51,7 @@ class Location extends Model
             if (! $this->parent_id) {
                 return null;
             }
+
             $ancestors = collect();
             $current = $this->parent;
             // Traverse upwards until we reach the root
