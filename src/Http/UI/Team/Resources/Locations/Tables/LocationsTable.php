@@ -36,7 +36,7 @@ final class LocationsTable
                     ->label('Parent')
                     ->searchable()
                     ->placeholder('Root'),
-                IconColumn::make('attributes.floorplan_svg')
+                IconColumn::make('attributes.floorplan_img')
                     ->label('SVG')
                     ->boolean(fn ($state): bool => filled($state)),
                 TextColumn::make('updated_at')

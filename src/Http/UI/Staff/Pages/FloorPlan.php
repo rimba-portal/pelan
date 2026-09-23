@@ -58,7 +58,7 @@ final class FloorPlan extends Page implements HasTable
         }
 
         $this->selectedLocationId = Location::query()
-            ->whereNotNull('attributes->floorplan_svg')
+            ->whereNotNull('attributes->floorplan_img')
             ->orderBy('name')
             ->value('id');
     }
@@ -85,7 +85,7 @@ final class FloorPlan extends Page implements HasTable
 
     public function getFloorplanUrlProperty(): ?string
     {
-        $path = data_get($this->selectedLocation?->attributes, 'floorplan_svg');
+        $path = data_get($this->selectedLocation?->attributes, 'floorplan_img');
 
         return filled($path) ? Storage::disk(config('filesystems.default'))->url($path) : null;
     }
@@ -106,13 +106,13 @@ final class FloorPlan extends Page implements HasTable
                     ->label('Parent')
                     ->state(fn (Location $record): ?string => $record->parent_path)
                     ->placeholder('Root'),
-                IconColumn::make('attributes.floorplan_svg')
+                IconColumn::make('attributes.floorplan_img')
                     ->label('Floor Plan')
                     ->boolean(fn ($state): bool => filled($state)),
             ])->recordActions([Action::make('viewFloorplan')
             ->label('View')
             ->icon('heroicon-o-map')
-            ->hidden(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_svg')))
+            ->hidden(fn (Location $record): bool => blank(data_get($record->attributes, 'floorplan_img')))
             ->action(
                 function (Location $record): void {
                     $this->selectLocation($record->getKey());

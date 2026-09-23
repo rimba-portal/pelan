@@ -25,7 +25,7 @@ final class LocationInfolist
                 TextEntry::make('description')
                     ->columnSpanFull()
                     ->placeholder('No description'),
-                TextEntry::make('attributes.floorplan_svg')
+                TextEntry::make('attributes.floorplan_img')
                     ->label('Floor plan')
                     ->placeholder('No SVG uploaded'),
             ])->columns(2),

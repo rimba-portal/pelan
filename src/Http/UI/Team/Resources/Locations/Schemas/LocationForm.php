@@ -44,9 +44,9 @@ final class LocationForm
                     ->rows(3),
             ])
                 ->columns(2),
-            Section::make('Floor plan')->description('Upload an SVG for this location. Staff will select the location from the directory and view this file.')->schema([
-                FileUpload::make('attributes.floorplan_svg')
-                    ->label('SVG floor plan')
+            Section::make('Floor plan')->description('Upload an image file (only .svg or .png accepted) for this location. Staff will select the location from the directory and view this file.')->schema([
+                FileUpload::make('attributes.floorplan_img')
+                    ->label('Image File')
                     ->disk(config('filesystems.default'))
                     ->directory('floorplans')
                     ->acceptedFileTypes(['image/svg+xml', 'image/png'])
