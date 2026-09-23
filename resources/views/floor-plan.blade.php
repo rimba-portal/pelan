@@ -72,7 +72,7 @@
                         />
                     @else
                         <div class="flex h-full items-center justify-center text-sm text-gray-500">
-                            Select a location with an uploaded SVG floor plan.
+                            This location does not have an uploaded SVG floor plan. Please escalate to admin.
                         </div>
                     @endif
                 </div>

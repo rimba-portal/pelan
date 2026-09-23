@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// <--- MOVED TO THE TOP HERE
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 use Rimba\Organization\Models\OrgCorp;
 
 #[Fillable([
@@ -63,6 +63,44 @@ class Location extends Model
             // Reverse so it reads left-to-right: Grandparent > Parent
             return $ancestors->reverse()->implode(' > ');
         });
+    }
+
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            get: function (): string {
+
+                $segments = [];
+
+                $current = $this;
+
+                while ($current) {
+
+                    $segments[] = Str::slug(
+                        $current->code
+                            ?? $current->name
+                    );
+
+                    $current = $current->parent;
+                }
+
+                return collect($segments)
+                    ->reverse()
+                    ->implode('/');
+            }
+        );
+    }
+
+    protected function url(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): string => route(
+                'filament.staff.pages.floor-plan',
+                [
+                    'location' => $this->slug,
+                ]
+            )
+        );
     }
 
     public function children(): HasMany

@@ -14,6 +14,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Url;
 use Rimba\Floorplan\Models\Location;
 use UnitEnum;
 
@@ -35,15 +36,46 @@ final class FloorPlan extends Page implements HasTable
 
     public ?int $selectedLocationId = null;
 
+    #[Url]
+    public ?string $location = null;
+
     public function mount(): void
     {
-        $this->selectedLocationId = Location::query()->whereNotNull('attributes->floorplan_svg')->orderBy('name')->value('id');
+        if ($this->location) {
+
+            $location = Location::query()
+                ->with('parent.parent.parent.parent')
+                ->get()
+                ->first(
+                    fn (Location $record): bool => $record->slug === $this->location
+                );
+
+            if ($location) {
+                $this->selectedLocationId = $location->id;
+
+                return;
+            }
+        }
+
+        $this->selectedLocationId = Location::query()
+            ->whereNotNull('attributes->floorplan_svg')
+            ->orderBy('name')
+            ->value('id');
     }
 
     public function selectLocation(int $locationId): void
     {
         $this->selectedLocationId = $locationId;
-        $this->dispatch('floorplan-location-changed');
+
+        $location = Location::find($locationId);
+
+        if ($location) {
+            $this->location = $location->slug;
+        }
+
+        $this->dispatch(
+            'floorplan-location-changed'
+        );
     }
 
     public function getSelectedLocationProperty(): ?Location
