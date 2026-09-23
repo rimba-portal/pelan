@@ -47,12 +47,12 @@ final class LocationForm
             Section::make('Floor plan')->description('Upload an image file (only .svg or .png accepted) for this location. Staff will select the location from the directory and view this file.')->schema([
                 FileUpload::make('attributes.floorplan_img')
                     ->label('Image File')
-                    ->disk(config('filesystems.default'))
+                    ->disk('public')
                     ->directory('floorplans')
                     ->acceptedFileTypes(['image/svg+xml', 'image/png'])
                     ->maxSize(5120)
-                    ->downloadable()
-                    ->openable()
+                    // ->downloadable()
+                    // ->openable()
                     ->preserveFilenames(),
             ]),
             Section::make('Additional attributes')

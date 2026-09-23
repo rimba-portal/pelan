@@ -42,7 +42,6 @@ final class FloorPlan extends Page implements HasTable
     public function mount(): void
     {
         if ($this->location) {
-
             $location = Location::query()
                 ->with('parent.parent.parent.parent')
                 ->get()
@@ -58,9 +57,23 @@ final class FloorPlan extends Page implements HasTable
         }
 
         $this->selectedLocationId = Location::query()
-            ->whereNotNull('attributes->floorplan_img')
+            ->whereRaw('json_valid(attributes) = 1')
+            ->whereRaw("json_extract(attributes, '$.floorplan_img') IS NOT NULL")
+            ->whereRaw("json_extract(attributes, '$.floorplan_img') != ''")
             ->orderBy('name')
             ->value('id');
+    }
+
+    public function getFloorplanUrlProperty(): ?string
+    {
+        $path = data_get(
+            $this->selectedLocation?->attributes,
+            'floorplan_img'
+        );
+
+        return filled($path)
+            ? Storage::disk('public')->url($path)
+            : null;
     }
 
     public function selectLocation(int $locationId): void
@@ -81,13 +94,6 @@ final class FloorPlan extends Page implements HasTable
     public function getSelectedLocationProperty(): ?Location
     {
         return $this->selectedLocationId ? Location::query()->find($this->selectedLocationId) : null;
-    }
-
-    public function getFloorplanUrlProperty(): ?string
-    {
-        $path = data_get($this->selectedLocation?->attributes, 'floorplan_img');
-
-        return filled($path) ? Storage::disk(config('filesystems.default'))->url($path) : null;
     }
 
     public function table(Table $table): Table
