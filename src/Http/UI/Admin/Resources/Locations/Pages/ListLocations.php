@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rimba\Floorplan\Http\UI\Admin\Resources\Locations\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Rimba\Floorplan\Http\UI\Admin\Resources\Locations\LocationResource;
 
 class ListLocations extends ListRecords
 {
-    protected static string $resource = \Rimba\Floorplan\Http\UI\Admin\Resources\Locations\LocationResource::class;
+    protected static string $resource = LocationResource::class;
 
     protected static ?string $title = 'Facilities & Locations';
 
