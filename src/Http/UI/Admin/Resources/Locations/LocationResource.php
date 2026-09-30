@@ -18,7 +18,7 @@ class LocationResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Floorplan';
 
-    protected static string|BackedEnum|null $navigationIcon = 'bites-s-location';
+    protected static string|BackedEnum|null $navigationIcon = 'bites-location';
 
     protected static ?int $navigationSort = 3;
 
