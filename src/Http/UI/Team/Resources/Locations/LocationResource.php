@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Rimba\Floorplan\Http\UI\RelationManagers\LocationAssignmentsRelationManager;
 use Rimba\Floorplan\Http\UI\Team\Resources\Locations\Pages\CreateLocation;
 use Rimba\Floorplan\Http\UI\Team\Resources\Locations\Pages\EditLocation;
 use Rimba\Floorplan\Http\UI\Team\Resources\Locations\Pages\ListLocations;
@@ -51,7 +52,10 @@ final class LocationResource extends Resource
 
     public static function getRelations(): array
     {
-        return [ChildLocationsRelationManager::class];
+        return [
+            ChildLocationsRelationManager::class,
+            LocationAssignmentsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

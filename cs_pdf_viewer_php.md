@@ -1,3 +1,12 @@
+# php
+```php
+
+```
+
+
+# blade 
+bites::pdf-view
+```php
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
     <div
         class="flex w-full flex-col overflow-hidden rounded-lg border border-gray-300 bg-white select-none"
@@ -18,3 +27,4 @@
         @endif
     </div>
 </x-dynamic-component>
+```
