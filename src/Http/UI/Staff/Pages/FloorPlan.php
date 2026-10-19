@@ -70,7 +70,7 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
 
     public static function canAccess(): bool
     {
-        return true; // auth()->user()?->can('floorplan.floor-plan') ?? false;
+        return true; // auth()->user()?->can('floorplan.floor-plan.access') ?? false;
     }
 
     public static function canManage(): bool
