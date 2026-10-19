@@ -1,8 +1,5 @@
 <x-filament::tabs>
-    <x-filament::tabs.item
-        :active="$this->planFilter === 'all'"
-        wire:click="setPlanFilter('all')"
-    >
+    <x-filament::tabs.item :active="$this->planFilter === 'all'" wire:click="setPlanFilter('all')">
         All
     </x-filament::tabs.item>
 
