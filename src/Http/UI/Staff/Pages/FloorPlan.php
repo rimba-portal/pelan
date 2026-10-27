@@ -80,7 +80,9 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
             return false;
         }
 
-        return $user->can('floorplan.location.create') || $user->can('floorplan.location.update');
+        $staff = $user->staff;
+
+        return $staff?->hasAnyPermission(['create.floorplan.location', 'update.floorplan.location']);
     }
 
     /*

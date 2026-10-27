@@ -55,7 +55,7 @@ class FloorplanServiceProvider extends BitesServiceProvider
          * Only shown when the user may create or edit locations. All record maintenance is delegated to the Team panel.
          */
         FilamentView::registerRenderHook(
-            TablesRenderHook::TOOLBAR_SEARCH_AFTER,
+            TablesRenderHook::TOOLBAR_SEARCH_BEFORE,
             fn (): string => $this->renderManageLocationsAction(),
             scopes: [FloorPlan::class],
         );
