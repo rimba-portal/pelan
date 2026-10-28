@@ -70,19 +70,17 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
 
     public static function canAccess(): bool
     {
-        return true; // auth()->user()?->can('floorplan.floor-plan.access') ?? false;
+        return auth()->user()?->staff?->hasAnyPermission([
+            'view.floorplan.location',
+        ]) ?? true;
     }
 
     public static function canManage(): bool
     {
-        $user = auth()->user();
-        if (! $user) {
-            return false;
-        }
-
-        $staff = $user->staff;
-
-        return $staff?->hasAnyPermission(['create.floorplan.location', 'update.floorplan.location']);
+        return auth()->user()?->staff?->hasAnyPermission([
+            'create.floorplan.location',
+            'update.floorplan.location'
+        ]) ?? false;
     }
 
     /*
@@ -101,7 +99,7 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
                 ->with('parent.parent.parent.parent')
                 ->get()
                 ->first(
-                    fn (Location $record): bool => $record->slug === $this->location
+                    fn(Location $record): bool => $record->slug === $this->location
                 );
 
             if ($location) {
@@ -226,11 +224,11 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
     {
         return $table
             ->query(
-                fn (): Builder => Location::query()
+                fn(): Builder => Location::query()
                     ->with('parent')
                     ->when(
                         $this->planFilter === 'with-plans',
-                        fn (Builder $query): Builder => $this->applyWithPlansScope($query)
+                        fn(Builder $query): Builder => $this->applyWithPlansScope($query)
                     )
             )
             ->defaultSort('name')
@@ -251,14 +249,14 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
                 TextColumn::make('parent_path')
                     ->label('Parent')
                     ->state(
-                        fn (Location $record): ?string => $record->parent_path
+                        fn(Location $record): ?string => $record->parent_path
                     )
                     ->placeholder('Root'),
 
                 IconColumn::make('attributes.floorplan_img')
                     ->label('Floor Plan')
                     ->boolean(
-                        fn ($state): bool => filled($state)
+                        fn($state): bool => filled($state)
                     ),
             ])
             ->recordActions([
@@ -270,7 +268,7 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
                     ->label('View')
                     ->icon('heroicon-o-map')
                     ->hidden(
-                        fn (Location $record): bool => ! $this->hasFloorPlan($record)
+                        fn(Location $record): bool => ! $this->hasFloorPlan($record)
                     )
                     ->action(
                         function (Location $record): void {
@@ -289,7 +287,7 @@ class FloorPlan extends Page implements HasActions, HasSchemas, HasTable
              * one exists.
              */
             ->recordAction(
-                fn (Location $record): ?string => $this->hasFloorPlan($record)
+                fn(Location $record): ?string => $this->hasFloorPlan($record)
                     ? 'viewFloorplan'
                     : null
             )
