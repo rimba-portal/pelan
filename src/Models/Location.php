@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Rimba\Organization\Models\OrgCorp;
+use Rimba\Work\Models\Concerns\HasManufacturingScope;
 
 #[Fillable([
     'parent_id',
@@ -25,6 +26,7 @@ use Rimba\Organization\Models\OrgCorp;
 class Location extends Model
 {
     use HasFactory;
+    use HasManufacturingScope;
 
     /**
      * Get the attributes that should be cast.
